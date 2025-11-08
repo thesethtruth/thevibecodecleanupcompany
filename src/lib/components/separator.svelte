@@ -1,5 +1,5 @@
 <div
-	class="separator absolute right-0 left-0 z-10 flex h-20 items-center justify-center overflow-visible"
+	class="separator absolute top-0 right-0 left-0 z-10 flex h-20 -translate-y-1/2 items-center justify-center overflow-visible"
 >
 	<svg
 		viewBox="0 0 1000 60"

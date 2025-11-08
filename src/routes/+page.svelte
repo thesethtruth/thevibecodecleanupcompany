@@ -77,11 +77,27 @@
 	ctaHref="#contact"
 />
 
+<section id="contact" class="contact relative bg-[#4A5C4E] px-5 py-[120px] text-center">
+	<h2
+		class="mb-[30px] font-['Righteous'] text-[clamp(2rem,6vw,3.5rem)] font-normal text-[#e8d5b7] [text-shadow:5px_5px_0_#1a1816]"
+	>
+		Ready to stop pretending?
+	</h2>
+	<p class="mb-10 text-[1.3rem] text-[#e8d5b7]">
+		Your investors are asking questions. Your team is burning out.<br />We fix codebases for
+		companies that grew too fast.
+	</p>
+	<a
+		href="mailto:hello@vibecode.co"
+		class="inline-block rounded-[50px] border-[5px] border-[#e8d5b7] bg-[#b85230] px-[50px] py-5 text-xl font-bold text-[#e8d5b7] no-underline shadow-[5px_5px_0_#1a1816] transition-transform duration-200 hover:scale-105"
+	>
+		hello@vibecode.co
+	</a>
+</section>
+
 <div class="relative">
 	<Separator />
 </div>
-
-<Timeline title="How we work" items={timelineItems} />
 
 <section class="services relative bg-[#E8D5B7] px-5 py-[120px]">
 	<h2
@@ -106,22 +122,6 @@
 	<Separator />
 </div>
 
-<section id="contact" class="contact relative bg-[#4A5C4E] px-5 py-[120px] text-center">
-	<h2
-		class="mb-[30px] font-['Righteous'] text-[clamp(2rem,6vw,3.5rem)] font-normal text-[#e8d5b7] [text-shadow:5px_5px_0_#1a1816]"
-	>
-		Ready to stop pretending?
-	</h2>
-	<p class="mb-10 text-[1.3rem] text-[#e8d5b7]">
-		Your investors are asking questions. Your team is burning out.<br />We fix codebases for
-		companies that grew too fast.
-	</p>
-	<a
-		href="mailto:hello@vibecode.co"
-		class="inline-block rounded-[50px] border-[5px] border-[#e8d5b7] bg-[#b85230] px-[50px] py-5 text-xl font-bold text-[#e8d5b7] no-underline shadow-[5px_5px_0_#1a1816] transition-transform duration-200 hover:scale-105"
-	>
-		hello@vibecode.co
-	</a>
-</section>
+<Timeline title="How we work" items={timelineItems} />
 
 <Footer />

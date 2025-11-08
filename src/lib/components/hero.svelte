@@ -23,10 +23,12 @@
 		class="headline relative mb-10 grid place-items-center text-center font-['Righteous'] text-[clamp(2rem,8vw,5rem)] leading-[1.1]"
 	>
 		<span
-			class="text-outline font-normal text-[#b85230] [-webkit-text-stroke:5px_#e8d5b7] [grid-area:1/1] [text-shadow:6px_6px_0_#1a1816]"
+			class="text-outline max-w-2xl font-normal text-[#b85230] [-webkit-text-stroke:5px_#e8d5b7] [grid-area:1/1] [text-shadow:6px_6px_0_#1a1816]"
 			>{headlineText}</span
 		>
-		<span class="text-clean font-normal text-[#b85230] [grid-area:1/1]">{headlineText}</span>
+		<span class="text-clean max-w-2xl font-normal text-[#b85230] [grid-area:1/1]"
+			>{headlineText}</span
+		>
 	</h1>
 
 	<a

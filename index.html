@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Code Cleanup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #1a1816;
+            color: #E8D5B7;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #E8D5B7;
+            position: relative;
+        }
+
+        .logo {
+            max-width: 500px;
+            width: 90%;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 8vw, 5rem);
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 40px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .text-outline {
+            grid-area: 1/1;
+            color: #B85230;
+            -webkit-text-stroke: 5px #E8D5B7;
+            text-shadow: 6px 6px 0 #1a1816;
+            font-weight: 400;
+        }
+
+        .text-clean {
+            grid-area: 1/1;
+            color: #B85230;
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background-color: #B85230;
+            color: #E8D5B7;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.2s;
+            box-shadow: 5px 5px 0 #1a1816;
+            border: 5px solid #E8D5B7;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Timeline */
+        .timeline {
+            padding: 120px 20px;
+            background: #4A5C4E;
+            position: relative;
+        }
+
+        .timeline h2 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 80px;
+            display: grid;
+            place-items: center;
+        }
+
+        .timeline .text-outline {
+            grid-area: 1/1;
+            color: #E8D5B7;
+            -webkit-text-stroke: 4px #B85230;
+            text-shadow: 5px 5px 0 #1a1816;
+            font-weight: 400;
+        }
+
+        .timeline .text-clean {
+            grid-area: 1/1;
+            color: #E8D5B7;
+            font-weight: 400;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #1a1816;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) auto minmax(200px, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        .timeline-item.left .timeline-content {
+            grid-column: 1;
+            text-align: right;
+            justify-self: end;
+        }
+
+        .timeline-item.right .timeline-content {
+            grid-column: 3;
+            text-align: left;
+            justify-self: start;
+        }
+
+        .timeline-item.left .timeline-dot {
+            grid-column: 2;
+            justify-self: center;
+        }
+
+        .timeline-item.right .timeline-dot {
+            grid-column: 2;
+            justify-self: center;
+        }
+
+        .timeline-content {
+            background: #E8D5B7;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid #B85230;
+            box-shadow: 4px 4px 0 #1a1816;
+            position: relative;
+            width: 380px;
+        }
+
+        .timeline-number {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            color: #B85230;
+            margin-bottom: 10px;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .timeline-content h3 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: #1a1816;
+            margin-bottom: 10px;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .timeline-content p {
+            color: #1a1816;
+            line-height: 1.5;
+        }
+
+        .timeline-dot {
+            width: 24px;
+            height: 24px;
+            background: #B85230;
+            border: 4px solid #E8D5B7;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #1a1816;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 1024px) {
+            .timeline-content {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                max-width: 300px;
+            }
+
+            .timeline-line {
+                left: 30px;
+            }
+
+            .timeline-item {
+                grid-template-columns: auto 1fr;
+                gap: 20px;
+            }
+
+            .timeline-item.left .timeline-content,
+            .timeline-item.right .timeline-content {
+                grid-column: 2;
+                text-align: left;
+                width: auto;
+                max-width: 100%;
+            }
+
+            .timeline-item.left .timeline-dot,
+            .timeline-item.right .timeline-dot {
+                grid-column: 1;
+            }
+
+            .timeline-container {
+                padding: 0 20px;
+            }
+        }
+
+        /* Services */
+        .services {
+            padding: 120px 20px;
+            background-color: #E8D5B7;
+            color: #000;
+            position: relative;
+        }
+
+        .services h2 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 80px;
+            display: grid;
+            place-items: center;
+        }
+
+        .services .text-outline {
+            grid-area: 1/1;
+            color: #B85230;
+            -webkit-text-stroke: 4px #E8D5B7;
+            text-shadow: 5px 5px 0 #1a1816;
+            font-weight: 400;
+        }
+
+        .services .text-clean {
+            grid-area: 1/1;
+            color: #B85230;
+            font-weight: 400;
+        }
+
+        /* Separator */
+        .separator {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .separator-1 {
+            background: transparent;
+        }
+
+        .separator-2 {
+            background: transparent;
+        }
+
+        .separator svg {
+            width: 100%;
+            max-width: 1000px;
+            height: 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #4A5C4E;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 4px solid #E8D5B7;
+            position: relative;
+            box-shadow: 6px 6px 0 #1a1816;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Red layer - hidden by default, appears on hover moving left */
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #B85230;
+            border-radius: 20px;
+            border: 4px solid #E8D5B7;
+            opacity: 0;
+            transform: translateX(0);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            transform: translateX(-18px);
+        }
+
+        .card:hover {
+            box-shadow: 12px 6px 0 #1a1816;
+        }
+
+        .card h3 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            color: #E8D5B7;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #E8D5B7;
+            line-height: 1.5;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 120px 20px;
+            background-color: #4A5C4E;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact h2 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 30px;
+            color: #E8D5B7;
+            text-shadow: 5px 5px 0 #1a1816;
+            font-weight: 400;
+        }
+
+        .contact p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: #E8D5B7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background-color: #1a1816;
+            text-align: center;
+            color: #E8D5B7;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <img src="/mnt/user-data/uploads/vibecodecleanup.png" alt="Vibe Code Cleanup" class="logo">
+        <h1>
+            <span class="text-outline">Your codebase is a dumpster fire</span>
+            <span class="text-clean">Your codebase is a dumpster fire</span>
+        </h1>
+        <a href="#contact" class="btn">Yeah, we know</a>
+    </section>
+
+    <div class="separator separator-1">
+        <svg viewBox="0 0 1000 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left line -->
+            <line x1="50" y1="30" x2="200" y2="30" stroke="#3d3530" stroke-width="2"/>
+            
+            <!-- Left diamonds increasing in size -->
+            <polygon points="220,30 225,25 230,30 225,35" fill="#3d3530"/>
+            <polygon points="250,30 257,23 264,30 257,37" fill="#3d3530"/>
+            <polygon points="280,30 290,20 300,30 290,40" fill="#3d3530"/>
+            <polygon points="320,30 333,17 346,30 333,43" fill="#3d3530"/>
+            <polygon points="370,30 387,13 404,30 387,47" fill="#3d3530"/>
+            
+            <!-- Center vibe code icon (comma in circle) -->
+            <g transform="translate(500, 30)">
+                <circle cx="0" cy="0" r="22" fill="#B85230"/>
+                <path d="M -6 -10 Q -3 -5, 0 0 L 0 8 Q 2 12, 6 10" stroke="#E8D5B7" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+            
+            <!-- Right diamonds decreasing in size -->
+            <polygon points="596,30 613,13 630,30 613,47" fill="#3d3530"/>
+            <polygon points="654,30 667,17 680,30 667,43" fill="#3d3530"/>
+            <polygon points="700,30 710,20 720,30 710,40" fill="#3d3530"/>
+            <polygon points="736,30 743,23 750,30 743,37" fill="#3d3530"/>
+            <polygon points="770,30 775,25 780,30 775,35" fill="#3d3530"/>
+            
+            <!-- Right line -->
+            <line x1="800" y1="30" x2="950" y2="30" stroke="#3d3530" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <section class="timeline">
+        <h2>
+            <span class="text-outline">How we work</span>
+            <span class="text-clean">How we work</span>
+        </h2>
+        
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-number">01</div>
+                    <h3>You tell us your pain</h3>
+                    <p>30-minute call. No sales BS. Just you explaining what's actually broken.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-number">02</div>
+                    <h3>We audit the mess</h3>
+                    <p>Week one. We dig through your codebase and document every skeleton in the closet.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-number">03</div>
+                    <h3>Honest assessment</h3>
+                    <p>No sugar coating. Here's what's broken, why it's broken, and what it'll take to fix it.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-number">04</div>
+                    <h3>We fix it</h3>
+                    <p>Embedded with your team. Fixing, documenting, and teaching as we go.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-number">05</div>
+                    <h3>Your team ships</h3>
+                    <p>Deploys without fear. New hires onboard in days, not months. You get your weekends back.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2>
+            <span class="text-outline">We've seen this before</span>
+            <span class="text-clean">We've seen this before</span>
+        </h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Your tests are lying</h3>
+                <p>95% coverage. 5% of it actually works. We'll find what's broken and fix it before your Series B pitch.</p>
+            </div>
+            <div class="card">
+                <h3>Nobody knows how it works</h3>
+                <p>Your best engineer quit six months ago and took all the knowledge with them. We'll document the chaos.</p>
+            </div>
+            <div class="card">
+                <h3>It's getting slower</h3>
+                <p>Each deploy takes longer. Each feature takes more time. We know why. We'll fix it.</p>
+            </div>
+            <div class="card">
+                <h3>You're afraid to deploy</h3>
+                <p>Friday deploys? Forget it. We'll stabilize your pipeline so you can ship without sweating.</p>
+            </div>
+            <div class="card">
+                <h3>Technical debt is compounding</h3>
+                <p>"We'll refactor later" was 18 months ago. Later is now. We'll pay down the debt.</p>
+            </div>
+            <div class="card">
+                <h3>New hires are confused</h3>
+                <p>Onboarding takes three months because nobody understands the architecture. We'll make it make sense.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="separator separator-2">
+        <svg viewBox="0 0 1000 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left line -->
+            <line x1="50" y1="30" x2="200" y2="30" stroke="#3d3530" stroke-width="2"/>
+            
+            <!-- Left diamonds increasing in size -->
+            <polygon points="220,30 225,25 230,30 225,35" fill="#3d3530"/>
+            <polygon points="250,30 257,23 264,30 257,37" fill="#3d3530"/>
+            <polygon points="280,30 290,20 300,30 290,40" fill="#3d3530"/>
+            <polygon points="320,30 333,17 346,30 333,43" fill="#3d3530"/>
+            <polygon points="370,30 387,13 404,30 387,47" fill="#3d3530"/>
+            
+            <!-- Center vibe code icon (comma in circle) -->
+            <g transform="translate(500, 30)">
+                <circle cx="0" cy="0" r="22" fill="#B85230"/>
+                <path d="M -6 -10 Q -3 -5, 0 0 L 0 8 Q 2 12, 6 10" stroke="#E8D5B7" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+            
+            <!-- Right diamonds decreasing in size -->
+            <polygon points="596,30 613,13 630,30 613,47" fill="#3d3530"/>
+            <polygon points="654,30 667,17 680,30 667,43" fill="#3d3530"/>
+            <polygon points="700,30 710,20 720,30 710,40" fill="#3d3530"/>
+            <polygon points="736,30 743,23 750,30 743,37" fill="#3d3530"/>
+            <polygon points="770,30 775,25 780,30 775,35" fill="#3d3530"/>
+            
+            <!-- Right line -->
+            <line x1="800" y1="30" x2="950" y2="30" stroke="#3d3530" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <section class="contact" id="contact">
+        <h2>Ready to stop pretending?</h2>
+        <p>Your investors are asking questions. Your team is burning out.<br>We fix codebases for companies that grew too fast.</p>
+        <a href="mailto:hello@vibecode.co" class="btn">hello@vibecode.co</a>
+    </section>
+
+    <footer>
+        <p>Vibe Code Cleanup Company Inc.</p>
+    </footer>
+</body>
+</html>

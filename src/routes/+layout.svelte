@@ -8,6 +8,4 @@
 
 <Toaster />
 <Header />
-<div class="p-35 container mx-auto flex flex-col items-center justify-center">
-	{@render children?.()}
-</div>
+{@render children?.()}

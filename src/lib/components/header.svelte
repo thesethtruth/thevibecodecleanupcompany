@@ -1,33 +1,38 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { BookOpen, FileSearch } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+
+	let scrollY = $state(0);
+	let opacity = $derived(Math.min(scrollY / 100, 1));
+
+	onMount(() => {
+		const handleScroll = () => {
+			scrollY = window.scrollY;
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	});
 </script>
 
 <header
-	class="absolute top-0 z-50 flex h-12 w-full items-center justify-between bg-white px-20 py-1 shadow-sm"
+	class="fixed top-0 z-50 flex h-16 w-full items-center justify-start px-5 transition-opacity duration-300"
+	style="opacity: {opacity}"
 >
-	{#if page.url.pathname === '/'}
-		<a
-			href="/"
-			class="flex items-center gap-2 transition-opacity hover:opacity-75"
-			aria-label="Go to homepage"
+	<div class="flex flex-col">
+		<h1
+			class="headline relative grid place-items-center font-['Righteous'] text-xl leading-[1.1] md:text-2xl"
 		>
-			<FileSearch class="h-6 w-6 text-blue-600" />
-			<span class="text-lg font-semibold text-gray-900">TIV</span>
-		</a>
-
-		<a
-			href="/"
-			class="flex items-center gap-2 transition-opacity hover:opacity-75"
-			aria-label="Go to homepage"
+			<span
+				class="text-outline font-normal text-[#b85230] [-webkit-text-stroke:2px_#e8d5b7] [grid-area:1/1] [text-shadow:3px_3px_0_#1a1816]"
+			>
+				vibe code cleanup
+			</span>
+			<span class="text-clean font-normal text-[#b85230] [grid-area:1/1]"> vibe code cleanup </span>
+		</h1>
+		<span
+			class="w-fit rounded-sm bg-muted px-2 py-0.5 font-serif text-xs font-bold tracking-widest text-muted-foreground [text-shadow:2px_2px_0_#1a1816]"
 		>
-			<BookOpen class="h-6 w-6 text-slate-600" />
-			<span class="text-lg text-gray-800">about</span>
-		</a>
-	{:else}
-		<Button variant="outline" size="sm" href="/">
-			<span class="text-md text-gray-800">⟵ Back</span>
-		</Button>
-	{/if}
+			COMPANY INC.
+		</span>
+	</div>
 </header>

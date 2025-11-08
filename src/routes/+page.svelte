@@ -71,13 +71,15 @@
 </script>
 
 <Hero
-	logoSrc="/stickerlogo.png"
+	logoSrc="/fire.gif"
 	headlineText="Your codebase is a dumpster fire"
 	ctaText="Yeah, we know"
 	ctaHref="#contact"
 />
 
-<Separator />
+<div class="relative">
+	<Separator />
+</div>
 
 <Timeline title="How we work" items={timelineItems} />
 
@@ -100,7 +102,9 @@
 	</div>
 </section>
 
-<Separator />
+<div class="relative">
+	<Separator />
+</div>
 
 <section id="contact" class="contact relative bg-[#4A5C4E] px-5 py-[120px] text-center">
 	<h2

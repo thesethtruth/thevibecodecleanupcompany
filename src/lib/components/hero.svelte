@@ -12,7 +12,12 @@
 <section
 	class="hero relative flex min-h-screen flex-col items-center justify-center bg-[#E8D5B7] px-5 py-5"
 >
-	<img src={logoSrc} alt="Vibe Code Cleanup" class="logo mb-[60px] w-64 max-w-[300px]" />
+	<img
+		src={logoSrc}
+		alt="Vibe Code Cleanup"
+		class="logo mb-8 w-64 max-w-[300px]"
+		style="filter: saturate(1.4) contrast(1.3) sepia(0.7) brightness(1.1);"
+	/>
 
 	<h1
 		class="headline relative mb-10 grid place-items-center text-center font-['Righteous'] text-[clamp(2rem,8vw,5rem)] leading-[1.1]"
